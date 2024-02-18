@@ -39,7 +39,7 @@ bool queue_isEmpty(Queue_t *queue);
 
 bool queue_isFull(Queue_t *queue);
 
-bool queue_enqueue(Queue_t *queue, void * data, bool fifoMode);
+bool queue_enqueue(Queue_t *queue, void * data, bool fifoMode); 
 
 //bool queue_enqueue_auto(Queue_t *queue, bool fifoMode);
 
