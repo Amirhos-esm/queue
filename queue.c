@@ -45,16 +45,16 @@ bool queue_isFull(Queue_t *queue) {
 
 // Function to enqueue an integer into the integer queue
 bool queue_enqueue(Queue_t *queue, void * data,bool fifoMode) {
-#ifdef THREAD_SAFE
-    pthread_mutex_lock(&queue->lock);
-#endif
+
     if (queue_isFull(queue)) {
         if(fifoMode)
             queue_dequeue(queue);
         else
             return false; // Handle the error as needed
     }
-
+#ifdef THREAD_SAFE
+    pthread_mutex_lock(&queue->lock);
+#endif
     queue->head = (queue->head + 1) % queue->capacity;
     queue->data[queue->head] = data;
     queue->size++;
@@ -71,13 +71,12 @@ bool queue_enqueue(Queue_t *queue, void * data,bool fifoMode) {
 
 // Function to dequeue an integer from the integer queue
 void * queue_dequeue(Queue_t *queue) {
-#ifdef THREAD_SAFE
-    pthread_mutex_lock(&queue->lock);
-#endif
     if (queue_isEmpty(queue)) {
         return NULL; // Handle the error as needed
     }
-
+#ifdef THREAD_SAFE
+    pthread_mutex_lock(&queue->lock);
+#endif
     void * data = queue->data[queue->tail];
     queue->tail = (queue->tail + 1) % queue->capacity;
     queue->size--;
@@ -88,12 +87,13 @@ void * queue_dequeue(Queue_t *queue) {
 }
 // Function to dequeue an integer from the integer queue
 void * queue_getByIndex(Queue_t *queue,int index) {
-#ifdef THREAD_SAFE
-    pthread_mutex_lock(&queue->lock);
-#endif
+
     if (queue_isEmpty(queue) ||   index >= queue->size) {
         return NULL; // Handle the error as needed
     }
+#ifdef THREAD_SAFE
+    pthread_mutex_lock(&queue->lock);
+#endif
     void * ret = queue->data[(queue->tail + index) % queue->capacity];
 #ifdef THREAD_SAFE
     pthread_mutex_unlock(&queue->lock);

@@ -15,6 +15,8 @@ int main() {
 
     printf("%p\n", queue_dequeue(&queue));
     printf("%p\n", queue_dequeue(&queue));
+    queue_enqueue(&queue,(void *)5,false);
+    queue_enqueue(&queue,(void *)6,false);
     printf("%p\n", queue_dequeue(&queue));
     printf("%p\n", queue_dequeue(&queue));
     printf("%p\n", queue_dequeue(&queue));
