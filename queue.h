@@ -9,18 +9,31 @@
 #include "stdbool.h"
 #include "stddef.h"
 
+#define THREAD_SAFE
+
+
+#ifdef THREAD_SAFE
+#include "pthread.h"
+#endif
+
+
 // Define a structure for the integer queue
 typedef struct {
     void **data;
-    int front;
-    int rear;
+    int tail;
+    int head;
     size_t size;
     int capacity;
+#ifdef THREAD_SAFE
+    pthread_mutex_t lock;
+#endif
 } Queue_t;
 
 void * queue_dequeue(Queue_t *queue);
 
-void queue_init(Queue_t *queue, void **buffer, int cap);
+int queue_init(Queue_t *queue, void **buffer, int cap);
+
+int queue_deInit(Queue_t *queue);
 
 bool queue_isEmpty(Queue_t *queue);
 
