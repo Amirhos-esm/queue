@@ -18,7 +18,10 @@ typedef struct {
 } Queue_t;
 
 void * queue_dequeue(Queue_t *queue);
-
+/*
+ *  buffer memory should be cap + 1
+ *
+ * */
 void queue_init(Queue_t *queue, void **buffer, int cap);
 
 bool queue_isEmpty(Queue_t *queue);
