@@ -12,9 +12,8 @@
 // Define a structure for the integer queue
 typedef struct {
     void **data;
-    int front;
-    int rear;
-    size_t size;
+    int tail;
+    int head;
     int capacity;
 } Queue_t;
 
